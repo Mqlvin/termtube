@@ -65,12 +65,14 @@ fn main() {
                 for line in f_reader.lines() {
                     if let Ok(val) = line {
                         // This set of code is identical to the URL parsing above
-                        let url_obj = Url::parse(&val);
+                        let uncommented_value = val.split("#").next().unwrap_or(&val);
+
+                        let url_obj = Url::parse(&uncommented_value);
 
                         if let Err(_) = url_obj {
                             println!(
                                 " ERR: Error parsing the URL '{}' in the file '{}'",
-                                val, source
+                                uncommented_value, source
                             );
                             continue;
                         }
